@@ -57,6 +57,7 @@ void UGCBaseCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (IsValid(CurrentRangeWeapon))
 	{
 		ForeGripSocketTransform = CurrentRangeWeapon->GetForeGripTransform();
+		BowStringSocketTransform = CurrentRangeWeapon->GetBowStringTransform();
 	}
 }
 

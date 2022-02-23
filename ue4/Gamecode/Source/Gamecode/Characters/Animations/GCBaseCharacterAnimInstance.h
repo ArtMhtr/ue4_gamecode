@@ -75,6 +75,9 @@ protected:
 	FTransform ForeGripSocketTransform;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Animation | Weapon")
+	FTransform BowStringSocketTransform;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Animation | Weapon")
 	bool bIsAiming;
 
 private:

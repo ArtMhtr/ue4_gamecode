@@ -24,6 +24,11 @@ void AEquipableItem::SetOwner(AActor* NewOwner)
 	}
 }
 
+FName AEquipableItem::GetEquippedSocketName() const
+{
+	return bEquipToRightArm ? EquippedRightArmSocketName : EquippedLeftArmSocketName;
+}
+
 void AEquipableItem::Equip()
 {
 	if (OnEquipmentStateChanged.IsBound())

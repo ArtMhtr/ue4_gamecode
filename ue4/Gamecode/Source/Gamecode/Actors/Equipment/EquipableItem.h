@@ -23,7 +23,7 @@ public:
 	EEquipableItemType GetEquipableItemType() const { return ItemType; }
 
 	FName GetUnequippedSocketName() const { return UnequippedSocketName; }
-	FName GetEquippedSocketName() const { return EquippedSocketName; }
+	FName GetEquippedSocketName() const;
 
 	UAnimMontage* GetCharacterEquipAnimMontage() const { return CharacterEquipAnimMontage; }
 	virtual EReticleType GetReticleType() const { return ReticleType; }
@@ -46,7 +46,10 @@ protected:
 	FName UnequippedSocketName = NAME_None;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Equipable Item")
-	FName EquippedSocketName = NAME_None;
+	FName EquippedRightArmSocketName = NAME_None;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Equipable Item")
+	FName EquippedLeftArmSocketName = NAME_None;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Equipable Item")
 	UAnimMontage* CharacterEquipAnimMontage;
@@ -59,6 +62,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Equipable Item")
 	FName DataTableID = NAME_None;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Equipable Item")
+	bool bEquipToRightArm = true;
 
 private:
 	TWeakObjectPtr<AGCBaseCharacter> CachedCharacterOwner;

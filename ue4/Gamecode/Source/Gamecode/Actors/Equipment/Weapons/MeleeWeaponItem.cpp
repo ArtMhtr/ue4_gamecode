@@ -8,7 +8,7 @@
 
 AMeleeWeaponItem::AMeleeWeaponItem()
 {
-	EquippedSocketName = SocketCharacterWeapon;
+	EquippedRightArmSocketName = SocketCharacterWeapon;
 }
 
 void AMeleeWeaponItem::BeginPlay()

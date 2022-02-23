@@ -25,6 +25,7 @@ const FName SockedHead = FName("head");
 const FName SocketCharacterWeapon = FName("CharacterWeaponSocket");
 const FName SocketWeaponMuzzle = FName("MuzzleSocket");
 const FName SocketWeaponForeGrip = FName("ForeGripSocket");
+const FName SocketBowString = FName("SocketBowString");
 const FName SocketCharacterThrowable = FName("ThrowableSocket");
 
 const FName SectionMontageReloadEnd = FName("ReloadEnd");
@@ -49,6 +50,7 @@ enum class EEquipableItemType : uint8
 	Pistol,
 	Rifle,
 	Throwable,
+	Bow,
 	Melee
 };
 
@@ -61,6 +63,7 @@ enum class EAmmunitionType : uint8
 	ShotgunShells,
 	FragGrenades,
 	RifleGrenades,
+	Arrows,
 	MAX UMETA(Hidden)
 };
 

@@ -18,7 +18,7 @@ ARangeWeaponItem::ARangeWeaponItem()
 	WeaponBarrel = CreateDefaultSubobject<UWeaponBarrelComponent>(TEXT("WeaponBarrel"));
 	WeaponBarrel->SetupAttachment(WeaponMesh, SocketWeaponMuzzle);
 
-	EquippedSocketName = SocketCharacterWeapon;
+	EquippedRightArmSocketName = SocketCharacterWeapon;
 	ReticleType = EReticleType::Default;
 }
 
@@ -154,9 +154,28 @@ FTransform ARangeWeaponItem::GetForeGripTransform() const
 	return WeaponMesh->GetSocketTransform(SocketWeaponForeGrip);
 }
 
+FTransform ARangeWeaponItem::GetBowStringTransform() const
+{
+	return WeaponMesh->GetSocketTransform(SocketBowString);
+}
+
 void ARangeWeaponItem::StartAim()
 {
-	bIsAiming = true;
+	AGCBaseCharacter* CharacterOwner = GetCharacterOwner();
+	if (!IsValid(CharacterOwner))
+	{
+		return;
+	}
+
+	if (IsValid(CharacterOnStartAimingMontage) && IsValid(WeaponOnStartAimingMontage))
+	{
+		// bIsAiming will be set on aim notify
+		float MontageDuration = CharacterOwner->PlayAnimMontage(CharacterOnStartAimingMontage);
+		// GetWorld()->GetTimerManager().SetTimer(ReloadTimer, [this]() { bIsAiming = true; }, MontageDuration, false);
+	}
+	else {
+		bIsAiming = true;
+	}
 }
 
 void ARangeWeaponItem::StopAim()
@@ -181,6 +200,19 @@ void ARangeWeaponItem::SetAmmo(int32 NewAmmo)
 void ARangeWeaponItem::Server_SetAmmo_Implementation(int32 Ammo)
 {
 	SetAmmo(CurrentAmmo);
+}
+
+void ARangeWeaponItem::SetIsAiming(bool bIsAiming_New)
+{
+	bIsAiming = bIsAiming_New;
+}
+
+void ARangeWeaponItem::PlayWeaponStartAimingAnimMontage()
+{
+	if (IsValid(WeaponOnStartAimingMontage))
+	{
+		PlayAnimMontage(WeaponOnStartAimingMontage);
+	}
 }
 
 bool ARangeWeaponItem::CanShoot() const

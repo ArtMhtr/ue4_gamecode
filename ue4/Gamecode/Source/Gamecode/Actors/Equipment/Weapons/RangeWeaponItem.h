@@ -126,6 +126,7 @@ public:
 	void StopFire();
 
 	FTransform GetForeGripTransform() const;
+	FTransform GetBowStringTransform() const;
 
 	void StartAim();
 	void StopAim();
@@ -152,13 +153,17 @@ public:
 
 	bool IsFiring() const { return bIsFiring; }
 	bool IsReloading() const { return bIsReloading; }
+	bool IsAiming() const { return bIsAiming; }
 
 	void ChangeAmmoType();
 
 	UFUNCTION(Server, Reliable)
 	void Server_SetAmmo(int32 Ammo);
 
- protected:
+	void SetIsAiming(bool bIsAiming_New);
+	void PlayWeaponStartAimingAnimMontage();
+
+protected:
 
 	virtual void BeginPlay() override;
 
@@ -179,6 +184,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations | Character")
 	UAnimMontage* CharacterReloadMontage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations | Character")
+	UAnimMontage* CharacterOnStartAimingMontage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations | Character")
+	UAnimMontage* WeaponOnStartAimingMontage;
 
 	// Bullet spread half angle in degrees
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon | Parameters", meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 2.0f, UIMax = 2.0f))
@@ -229,6 +240,7 @@ private:
 	void MakeShot();
 	FTimerHandle ShotTimer;
 	FTimerHandle ReloadTimer;
+	FTimerHandle StartAimingTimer;
 
 	float PlayAnimMontage(UAnimMontage* AnimMontage);
 	void StopAnimMontage(UAnimMontage* AnimMontage, float BlendOutTime = 0.0f);
